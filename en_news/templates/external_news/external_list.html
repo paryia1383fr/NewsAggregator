@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8">
+    <title>اخبار خارجی</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:Tahoma, sans-serif;background:#f5f6f8;color:#222;direction:rtl;line-height:1.6;padding:24px}
+        h1{text-align:center;margin:20px 0;font-size:2rem}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:1200px;margin:0 auto}
+        .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+        .card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(0,0,0,0.12)}
+        .card img{width:100%;height:170px;object-fit:cover;display:block}
+        .card .body{padding:14px 16px;display:flex;flex-direction:column;flex:1}
+        .card h2{font-size:1.05rem;margin-bottom:8px;color:#0f1724;font-weight:700}
+        .card p{color:#4b5563;font-size:.95rem;margin-bottom:auto;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+        .card a{margin-top:12px;color:#1a73e8;text-decoration:none;font-weight:600}
+        .meta{font-size:.85rem;color:#6b7280;margin-top:8px}
+        @media(max-width:600px){.card img{height:160px}}
+        .refresh-btn{display:inline-block;background:#0b74ff;color:#fff;padding:8px 14px;border-radius:8px;text-decoration:none}
+    </style>
+</head>
+<body>
+    <h1>🌍 خبرهای خارجی</h1>
+    <div style="max-width:1200px;margin:0 auto;padding:0 16px;text-align:center;margin-bottom:12px;">
+        <a class="refresh-btn" href="?refresh=1">بارگذاری جدید</a>
+    </div>
+    <div class="grid">
+        {% for article in articles %}
+            <div class="card">
+                {% if article.image %}
+                    <img src="{{ article.image.url }}" alt="{{ article.title }}">
+                {% endif %}
+                <div class="body">
+                    <h2>{{ article.title }}</h2>
+                    <p>{{ article.description|default:''|safe }}</p>
+                    <div class="meta">
+                        {% if article.published_at %}{{ article.published_at|date:"Y-m-d H:i" }} • {% endif %}
+                        {% if article.source %} {{ article.source.name }} {% endif %}
+                    </div>
+                    <a href="{{ article.url }}" target="_blank" rel="noopener">ادامه خبر →</a>
+                </div>
+            </div>
+        {% empty %}
+            <p style="text-align:center;padding:40px">خبری یافت نشد</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
