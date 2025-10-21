@@ -145,4 +145,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #َAPI KEY YOUR WEB 
 
-NEWS_API_KEY = os.getenv('NEWS_API_KEY', '147e1113958c4c78a6b0f2aef4b703f5')
+NEWS_API_KEY = "147e1113958c4c78a6b0f2aef4b703f5"

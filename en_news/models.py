@@ -1,23 +1,20 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-
-class Source(models.Model):
-    name = models.CharField(max_length=150, blank=True, null=True)
+class ENSource(models.Model):
+    name = models.CharField(max_length=255)
     url = models.URLField(blank=True, null=True)
 
     def __str__(self):
-        return self.name or "Unknown Source"
+        return self.name
 
-class ExternalArticle(models.Model):
-    source = models.ForeignKey(Source, on_delete=models.SET_NULL, null=True, blank=True)
-    title = models.CharField(max_length=400)
+
+class ENArticle(models.Model):
+    source = models.ForeignKey(ENSource, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     url = models.URLField(unique=True)
-    image = models.URLField(blank=True, null=True)
     published_at = models.DateTimeField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    image_url = models.URLField(blank=True, null=True)  # لینک مستقیم عکس
 
     def __str__(self):
         return self.title
